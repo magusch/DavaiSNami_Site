@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <title>Давай с нами</title>
+         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    </head>
+    <body>
+	
+	<center> 
+		<a href='/events'> Давай с нами! </a>
+	<ul class="list-inline">  
+		<li class="list-inline-item">
+			<a href='/events/{{ today.month }}/{{today.day}}'> Сегодня</a>
+		</li>
+		<li class="list-inline-item">
+			<a href='/events/{{ (today+timedelta(days=1)).month }}/{{( today+timedelta(days=1)).day}}'> Завтра</a>
+		</li>
+			{% for i in range(2,6) %}
+		<li class="list-inline-item">
+			<a href='/events/{{ (today+timedelta(days=i)).month }}/{{( today+timedelta(days=i)).day}}'> 
+			{{ '%02d.%02d' % ((today+timedelta(days=i)).day,(today+timedelta(days=i)).month) }}</a>
+		</li>
+			{% endfor %}
+		<li class="list-inline-item">
+			<a href='/events/weekend'> Выходные</a>
+		</li>
+	</ul>	
+	</center>
+
+<div class="container">
+<div class="row">
+        {% for post in events %}
+        <div class="col-sm">
+         <h2>{{ post.title[1:] }}</h2>
+        <script async src="https://telegram.org/js/telegram-widget.js?11" data-telegram-post="DavaiSNami/{{ post.post_id }}" data-width="100%"></script>
+    </div>
+        {% endfor %}
+</div>
+   </div>  
+    </body>
+
+
+</html>
