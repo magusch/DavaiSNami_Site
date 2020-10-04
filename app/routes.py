@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import render_template
-from app import app,db
+from app import application,db
 
 from .models import Dev_events
 
@@ -8,14 +8,14 @@ from datetime import datetime,timedelta
 
 today = datetime.utcnow()+timedelta(hours=3)
 
-@app.route('/')
-@app.route('/events')
+@application.route('/')
+@application.route('/events')
 def index():
     events = Dev_events.query.order_by(Dev_events.date_from).limit(12).all()
 
     return render_template('index.html', events=events, today=today, timedelta=timedelta)
 
-@app.route('/events/<int:month>/<int:day>/')
+@application.route('/events/<int:month>/<int:day>/')
 def event_for_day(month,day):
     date_search=datetime(year=today.year, month=month, day=day)
     events = Dev_events.query\
@@ -24,7 +24,7 @@ def event_for_day(month,day):
             .order_by(Dev_events.date_from).all()
     return render_template('index.html', events=events,today=today, timedelta=timedelta)
 
-@app.route('/events/weekend/')
+@application.route('/events/weekend/')
 def event_for_weekend():
 
     saturday = db.func.date(today + timedelta(5 - today.weekday()))
